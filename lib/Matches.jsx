@@ -5,7 +5,7 @@ var React = require('react'),
 		Team = require('./Team.jsx'),
 		MatchStore = require('./stores/MatchStore'),
 		Teams = require('./utils/Teams.json'),
-		$ = require('jquery')
+		_ = require('lodash')
 
 var teamStyle ={
 	display:"block"
@@ -44,7 +44,7 @@ var Matches = React.createClass({
 		var matches = this.state.matches.map(getMatchContent)
 		return (
 			<div style={matchSectionStyle} className="match-section">
-				<ColumnLayout cards={matches} />
+				<ColumnLayout width={350} cards={matches} />
 			</div>
 		)
 	},
