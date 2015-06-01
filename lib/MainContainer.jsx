@@ -1,10 +1,19 @@
 var React = require('react'),
-		mui = require('material-ui')
+		mui = require('material-ui'),
+		FeatureCarousel = require('./FeatureCarousel.jsx'),
+		Matches = require('./Matches.jsx')
+
+var innerMainContainerStyles = {
+	overflow:'hidden'
+}
 
 var MainContainer = React.createClass({
 	render: function() {
 		return (
-			<div className="inner-main-container" />
+			<div style={innerMainContainerStyles} className="inner-main-container">
+				<FeatureCarousel />
+				<Matches />
+			</div>
 		)
 	}
 })
