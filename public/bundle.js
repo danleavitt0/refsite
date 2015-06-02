@@ -297,7 +297,6 @@ var React = require('react'),
     _ = require('lodash'),
     Radium = require('radium')
 
-
 var numColumns = 1
 
 function getColumnNumber (colWidth) {
@@ -343,7 +342,16 @@ var ColumnLayout = React.createClass(Radium.wrap({
   },
 
   componentDidMount: function() {
+    
     window.addEventListener('resize', this.handleResize)
+    this.columnStyle = {
+      width:this.props.width,
+      maxWidth:'100%',
+      margin:10,
+      display:'inline-block',
+      verticalAlign: 'top'
+    }
+    
   },
 
   componentWillUnmount: function() {
