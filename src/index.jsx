@@ -1,10 +1,10 @@
 var React = require('react'),
-		$ = require('jquery'),
 		ThemeManager = require('material-ui/lib/styles/theme-manager')(),
 		Header = require('../lib/Header.jsx'),
 		MainContainer = require('../lib/MainContainer.jsx'),
 		ProfileActions = require('../lib/actions/ProfileActions'),
-		ProfileStore = require('../lib/stores/ProfileStore')
+		ProfileStore = require('../lib/stores/ProfileStore'),
+		$ = require('jquery')
 
 var App = React.createClass({
 
@@ -14,7 +14,7 @@ var App = React.createClass({
 
   getChildContext: function() {
     return {
-       muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getCurrentTheme()
     }
   },
 
