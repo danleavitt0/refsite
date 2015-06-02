@@ -17,7 +17,7 @@ var query = new YQL('SELECT * FROM data.html.cssselect(10) WHERE url="http://www
 var matches = []
 
 fireBaseRef.on("value", function(snapshot){
-  matches = snapshot.val()
+  matches = snapshot.val().matches
 })
 
 function getTeams (team) {
@@ -36,10 +36,13 @@ query.exec(function (error, response) {
     match.info = getTeams(div[1].a.span)
     match.referee = div[5].a.content
     match.time = div[0].span.timestamp
-    if(!matches.id && match.id)
+    if(match.id)
       matches[match.id] = match
   })
-  fireBaseRef.update({matches:matches})
+  if(_.isObject(matches)) {
+    // console.log(matches)
+    fireBaseRef.set({matches:matches})
+  }
 })
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
