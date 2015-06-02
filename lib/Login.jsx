@@ -3,13 +3,10 @@ var React = require('react'),
 	ProfileStore = require('./stores/ProfileStore'),
 	ProfileActions = require('./actions/ProfileActions'),
 	ThemeManager = require('material-ui/lib/styles/theme-manager')(),
-	RaisedButton = mui.RaisedButton
+	RaisedButton = mui.RaisedButton,
+	Radium = require('radium')
 
-style = {
-	marginTop:'6px'
-}
-
-var Login = React.createClass({
+var Login = React.createClass(Radium.wrap({
 
 	childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -37,22 +34,13 @@ var Login = React.createClass({
 
 	render: function () {
 		if (this.props.profile) {
-			imageStyle = {
-				backgroundImage:'url('+this.props.profile.picture+')',
-				height:'50px',
-				width:'50px',
-				borderRadius:'50%',
-				backgroundSize:'cover',
-				border:'1px solid #ccc'
-			}
 			return (
 				<div>
-					<div className="face" />
 					<RaisedButton 
 						onClick={this.logout}
 						primary={true}
 						label="logout"
-						style={style}
+						style={styles.base}
 					/>
 				</div>
 			)
@@ -64,13 +52,19 @@ var Login = React.createClass({
 						onClick={this.login}
 						primary={true}
 						label={this.props.label} 
-						style={style}
+						style={styles.base}
 					/>
 				</div>
 			)
 		}
 	}
 
-})
+}))
+
+var styles = {
+	base: {
+		marginTop:6
+	}
+}
 
 module.exports = Login

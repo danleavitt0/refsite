@@ -2,18 +2,6 @@ var React = require('react'),
 		CircleFill = require('./CircleFill.jsx'),
 		CarouselActions = require('./actions/CarouselActions')
 
-circleButtonStyle = {
-	height: 15,
-	width: 15,
-	zIndex: 1,
-	margin: 10,
-	backgroundColor: '#fff',
-	borderRadius: '50%',
-	cursor: 'pointer',
-	WebkitTransition: 'all .3s linear',
-	boxShadow: '0 1px 1px rgba(0,0,0,0.8)'
-}
-
 var CircleButton = React.createClass({
 	getInitialState: function() {
 		return {
@@ -28,7 +16,7 @@ var CircleButton = React.createClass({
 	render: function() {
 		return (
 			<div 
-				style={circleButtonStyle} 
+				style={styles.circle} 
 				onMouseOver={this._handleMouseOver} 
 				onMouseOut={this._handleMouseOut} 
 				onClick={this._handleClick} 
@@ -58,5 +46,18 @@ var CircleButton = React.createClass({
 		}
 	}
 })
+
+var styles = {
+	circle: {
+		height: 15,
+		width: 15,
+		zIndex: 1,
+		margin: 10,
+		backgroundColor: '#fff',
+		borderRadius: '50%',
+		cursor: 'pointer',
+		boxShadow: '0 1px 1px rgba(0,0,0,0.8)'
+	}
+}
 
 module.exports = CircleButton

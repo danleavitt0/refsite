@@ -4,17 +4,10 @@ var React = require('react'),
 		Navigation = require('./Navigation.jsx'),
 		CarouselStore = require('./stores/CarouselStore'),
 		MatchStore = require('./stores/MatchStore'),
+		Radium = require('radium')
 		_ = require('lodash')
 
-var carouselStyle = {
-	display:'flex',
-	width:'100%',
-	height:'60vh',
-	minHeight:400,
-	position:'relative'
-}
-
-var FeatureCarousel = React.createClass({
+var FeatureCarousel = React.createClass(Radium.wrap({
 	getInitialState: function() {
 		return {
 			active:0,
@@ -39,7 +32,10 @@ var FeatureCarousel = React.createClass({
 			}
 		}
 		return (
-			<div style={carouselStyle} className="featured-games" >
+			<div style={[
+				styles.base,
+				this.props.style
+			]} >
 				{carouselItems}
 				<Navigation active={this.state.active}/>
 			</div>
@@ -55,6 +51,16 @@ var FeatureCarousel = React.createClass({
 			matches:MatchStore.get()
 		})
 	}
-})
+}))
+
+var styles = {
+	base:{
+		display:'flex',
+		width:'100%',
+		height:'60vh',
+		minHeight:400,
+		position:'relative'
+	}
+}
 
 module.exports = FeatureCarousel

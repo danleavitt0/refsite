@@ -1,36 +1,22 @@
 var React = require('react'),
-    Card = require('./Card.jsx')
-    _ = require('lodash')
+    Card = require('./Card.jsx'),
+    _ = require('lodash'),
+    Radium = require('radium')
 
 
 var numColumns = 1
 
-var columnStyle = {
-  width:350,
-  maxWidth:'100%',
-  margin:10,
-  display:'inline-block',
-  verticalAlign: 'top'
-}
-
-var containerStyle = {
-  display:'table',
-  margin:'0 auto'
-}
-
-function getColumnNumber () {
+function getColumnNumber (colWidth) {
   var cols
   var width = window.innerWidth
 
-  if (width < 500) {
+  if (width < colWidth*2 + 100) {
     cols = 1
-    columnStyle.margin = 0
   }
-  else if (width < 1000) {
+  else if (width < colWidth*3 + 100) {
     cols = 2
-    columnStyle.margin = 10
   }
-  else if (width < 1500)
+  else if (width < colWidth*5 + 100)
     cols = 3
   else
     cols = 4
@@ -39,22 +25,27 @@ function getColumnNumber () {
 
 }
 
-var ColumnLayout = React.createClass({
+var ColumnLayout = React.createClass(Radium.wrap({
+
+  getDefaultProps: function() {
+    return {
+      width: 350
+    }
+  },
 
   getInitialState: function() {
-    return getColumnNumber()
+    return getColumnNumber(this.props.width)
   },
 
   getCards: function(col) {
     var cards = _.takeRight(this.props.cards, 10)
-    console.log(cards)
     return _.filter(cards, function(card, i){
       return i % this.state.numColumns ===  col
     },this)
   },
 
   handleResize: function(e) {
-    this.setState(getColumnNumber())
+    this.setState(getColumnNumber(this.props.width))
   },
 
   componentDidMount: function() {
@@ -71,19 +62,40 @@ var ColumnLayout = React.createClass({
 
     for (var i = 0; i < this.state.numColumns; i++){
       cols.push(
-        <div key={i} className={"column-"+i} style={columnStyle}>
+        <div key={i} className={"column-"+i} style= {[
+          styles.column, 
+          this.props.style,
+          this.props.width && {width: this.props.width}
+        ]} >
           {this.getCards(i)}
         </div>
       )
     }
    
     return (
-      <div style={containerStyle} className="md-grid-container">
+      <div style={styles.container} className="md-grid-container">
         {cols}
       </div>
     )
 
   }
-})
+}))
+
+var styles = {
+  column:{
+    width:350,
+    maxWidth:'100%',
+    margin:10,
+    display:'inline-block',
+    verticalAlign: 'top',
+    '@media (max-width: 500px)': {
+      margin:0
+    }
+  },
+  container:{
+    display:'table',
+    margin:'0 auto'
+  }
+}
 
 module.exports = ColumnLayout

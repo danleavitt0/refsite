@@ -1,17 +1,23 @@
-var React = require('react')
+var React = require('react'),
+		Radium = require('radium')
 
-var cardContentStyle={
-	padding:10
-}
-
-var CardContent = React.createClass({
+var CardContent = React.createClass(Radium.wrap({
 	render: function() {
 		return (
-			<div style={cardContentStyle} className="md-card-content">
+			<div style={[
+				styles.content,
+				this.props.style
+			]} >
 				{this.props.content}
 			</div>
 		)
 	}
-})
+}))
+
+var styles = {
+	content:{
+		padding:10
+	}
+}
 
 module.exports = CardContent

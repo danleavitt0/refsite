@@ -1,21 +1,27 @@
 var React = require('react'),
 		mui = require('material-ui'),
 		FeatureCarousel = require('./FeatureCarousel.jsx'),
-		Matches = require('./Matches.jsx')
+		Matches = require('./Matches.jsx'),
+		Radium = require('radium')
 
-var innerMainContainerStyles = {
-	overflow:'hidden'
-}
-
-var MainContainer = React.createClass({
+var MainContainer = React.createClass(Radium.wrap({
 	render: function() {
 		return (
-			<div style={innerMainContainerStyles} className="inner-main-container">
+			<div style={[
+				styles.base,
+				this.props.style
+			]}>
 				<FeatureCarousel />
 				<Matches />
 			</div>
 		)
 	}
-})
+}))
+
+var styles = {
+	base: {
+		overflow:'hidden'
+	}
+}
 
 module.exports = MainContainer

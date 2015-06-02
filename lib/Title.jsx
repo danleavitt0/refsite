@@ -1,35 +1,35 @@
-var React = require('react')
+var React = require('react'),
+		Radium = require('radium')
 
-var Title = React.createClass({
+var Title = React.createClass(Radium.wrap({
 	getDefaultProps: function() {
 		return {
-			display:'flex',
-			fontSize: 60,
-			color:'#fff',
-			margin:0,
-			weight:400,
-			label:'Title',
-			flex: 1,
-			alignItems: 'center'
-		}
-	},
-	getStyles: function() {
-		return {
-			display: this.props.display,
-			fontSize: this.props.fontSize,
-			color: this.props.color,
-			margin: this.props.margin,
-			fontWeight: this.props.weight,
-			flex: this.props.flex,
-			alignItems: this.props.alignItems
+			label: ''	
 		}
 	},
 	render: function () {
-		this.style = this.styles || {}
 		return (
-			<h2 style={this.getStyles()}> {this.props.label} </h2>
+			<h2 
+				style={[
+					styles.base, 
+					this.props.style
+			]}> 
+					{this.props.label} 
+			</h2>
 		)
 	}
-})
+}))
+
+var styles = {
+	base: {
+		display:'flex',
+		fontSize: 60,
+		color:'#fff',
+		margin:0,
+		fontWeight:400,
+		flex: 1,
+		alignItems: 'center'
+	}
+}
 
 module.exports = Title

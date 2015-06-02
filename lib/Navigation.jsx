@@ -1,17 +1,8 @@
 var React = require('react'),
-		CircleButton = require('./CircleButton.jsx')
+		CircleButton = require('./CircleButton.jsx'),
+		Radium = require('radium')
 
-var navigationStyle = {
-	display: 'flex',
-	width:120,
-	height:15,
-	justifyContent:'space-between',
-	position: 'relative',
-	top:'90%',
-	margin: '0 auto'
-}
-
-var Navigation = React.createClass({
+var Navigation = React.createClass(Radium.wrap({
 	render: function () {
 		var buttons = []
 		for (var i = 0; i < 3; i++) {
@@ -19,11 +10,26 @@ var Navigation = React.createClass({
 			buttons.push(<CircleButton key={i} active={active} position={i}/>)
 		}
 		return (
-			<div style={navigationStyle} className="navigation-menu" >
+			<div style={[
+				styles.div,
+				this.props.style
+			]}>
 				{buttons}
 			</div>
 		)
 	}
-})
+}))
+
+var styles = {
+	div: {
+		display: 'flex',
+		width:120,
+		height:15,
+		justifyContent:'space-between',
+		position: 'relative',
+		top:'90%',
+		margin: '0 auto'
+	}
+}
 
 module.exports = Navigation

@@ -1,26 +1,19 @@
 var React = require('react'),
+		Radium = require('radium'),
 		moment = require('moment'),
 		ColumnLayout = require('./ColumnLayout.jsx'),
 		Card = require('./Card.jsx'),
 		Team = require('./Team.jsx'),
 		MatchStore = require('./stores/MatchStore'),
 		Teams = require('./utils/Teams.json'),
-		$ = require('jquery')
-
-var teamStyle ={
-	display:"block"
-}
-
-var matchSectionStyle = {
-	backgroundColor:"#e5e5e5"
-}
+		_ = require('lodash')
 
 function getMatchContent(match, i) {
 	match = _.first(match)
 	return (
 		<Card key={i} title={match.referee} color={Teams[match.info.home].color}>
 			<p> {moment(parseInt(match.time)).format('MMMM Do YYYY [at] h:mm a')} </p>
-			<div style={teamStyle} className="teams">
+			<div>
 				<Team team={match.info.home} score={match.info.score[0]} />
 				<Team team={match.info.away} score={match.info.score[2]} />
 			</div>
@@ -28,7 +21,7 @@ function getMatchContent(match, i) {
 	)
 }
 
-var Matches = React.createClass({
+var Matches = React.createClass(Radium.wrap({
 	getInitialState: function() {
 		return {
 			matches:MatchStore.get() 
@@ -43,7 +36,10 @@ var Matches = React.createClass({
 	render: function () {
 		var matches = this.state.matches.map(getMatchContent)
 		return (
-			<div style={matchSectionStyle} className="match-section">
+			<div style={[
+				styles.matchSection,
+				this.props.style
+			]}>
 				<ColumnLayout cards={matches} />
 			</div>
 		)
@@ -53,6 +49,12 @@ var Matches = React.createClass({
 			matches:MatchStore.get()
 		})
 	}
-})
+}))
+
+var styles = {
+	matchSection: {
+		backgroundColor:'#e5e5e5'
+	}
+}
 
 module.exports = Matches
