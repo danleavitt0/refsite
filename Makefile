@@ -14,8 +14,13 @@ validate:
 clean: 
 	@rm public/bundle.js &> /dev/null || true
 
-dev: clean
-	@${NODE_BIN}/watchify src/index.jsx -t reactify -o ./public/bundle.js & ${NODE_BIN}/nodemon app.js
+reload: 
+	@${NODE_BIN}/watchify src/index.jsx -v -t reactify -g livereactload -o ./public/bundle.js & 
+	${NODE_BIN}/livereactload monitor -n ./public/bundle.js &
+	wait
+
+dev: clean reload
+	${NODE_BIN}/nodemon app.js
 
 prod: clean
 	@${NODE_BIN}/browserify src/index.jsx | ${NODE_BIN}/uglifyjs > ./public/bundle.js
