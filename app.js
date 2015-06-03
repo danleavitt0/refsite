@@ -18,6 +18,7 @@ var matches = []
 
 fireBaseRef.on("value", function(snapshot){
   matches = snapshot.val().matches
+  console.log(matches)
 })
 
 function getTeams (team) {
@@ -36,13 +37,10 @@ query.exec(function (error, response) {
     match.info = getTeams(div[1].a.span)
     match.referee = div[5].a.content
     match.time = div[0].span.timestamp
-    if(match.id)
+    if(match.id && _.isEmpty(matches[match.id]))
       matches[match.id] = match
   })
-  if(_.isObject(matches)) {
-    // console.log(matches)
-    fireBaseRef.set({matches:matches})
-  }
+  fireBaseRef.update({matches:matches})
 })
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users

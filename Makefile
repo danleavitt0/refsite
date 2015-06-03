@@ -15,7 +15,7 @@ clean:
 	@rm public/bundle.js &> /dev/null || true
 
 reload: 
-	@${NODE_BIN}/watchify src/index.jsx -v -t reactify -g livereactload -o ./public/bundle.js & 
+	@${NODE_BIN}/watchify src/index.jsx -v -d -t reactify -g livereactload -o ./public/bundle.js & 
 	${NODE_BIN}/livereactload monitor -n ./public/bundle.js &
 	wait
 

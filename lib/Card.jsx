@@ -37,7 +37,7 @@ var styles = {
 		transition:'box-shadow .3s cubic-bezier(0.4,0,0.2,1)',
 		cursor:'pointer',
 		':hover': {
-			boxShadow: '0 0 3px rgba(0,0,0,.13),0 3px 6px rgba(0,0,0,.26)'
+			boxShadow: '0 0 3px rgba(0,0,0,.13),0 3px 6px rgba(0,0,0,.36)'
 		}
 	}
 }
