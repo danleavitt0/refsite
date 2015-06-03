@@ -4,6 +4,7 @@ var React = require('react'),
 		ColumnLayout = require('./ColumnLayout.jsx'),
 		Card = require('./Card.jsx'),
 		Team = require('./Team.jsx'),
+		CommentBox = require('./CommentBox.jsx'),
 		MatchStore = require('./stores/MatchStore'),
 		Teams = require('./utils/Teams.json'),
 		_ = require('lodash')
@@ -17,6 +18,7 @@ function getMatchContent(match, i) {
 				<Team team={match.info.home} score={match.info.score[0]} />
 				<Team team={match.info.away} score={match.info.score[2]} />
 			</div>
+			<CommentBox id={match.id} />
 		</Card>
 	)
 }
