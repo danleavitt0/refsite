@@ -9,7 +9,6 @@ var CommentBox = React.createClass(Radium.wrap({
     var fireBaseRef = new Firebase('https://ref-app.firebaseio.com/matches/matches/'+this.props.id)
     fireBaseRef.on('value', function(snapshot){
       this.data = snapshot.val()
-      console.log(this.data)
       this.setState({
         comments: this.data.comments || null
       })
@@ -36,7 +35,7 @@ var CommentBox = React.createClass(Radium.wrap({
 var styles = {
   commentBox: {
     width:'100%',
-    height:40,
+    padding:'10px 0',
     backgroundColor:'#f5f5f5'
   }
 }

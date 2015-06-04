@@ -1,6 +1,7 @@
 var React = require('react'),
     Radium = require('radium'),
-    Firebase = require('firebase')
+    Firebase = require('firebase'),
+    Input = require('./Input.jsx')
     
 var CommentInput = React.createClass(Radium.wrap({
   getInitialState: function () {
@@ -13,7 +14,7 @@ var CommentInput = React.createClass(Radium.wrap({
   },
   render: function () {
     return (
-      <input placeholder="Add a comment" value={this.state.value} onChange={this._handleInput} onKeyDown={this._handleKeyDown} />
+      <Input placeholder="Add a comment" value={this.state.value} onChange={this._handleInput} onKeyDown={this._handleKeyDown} />
     )
   },
   _handleInput: function(e) {

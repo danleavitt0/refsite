@@ -1,7 +1,6 @@
 var React = require('react'),
 		mui = require('material-ui'),
 		CardTitle = require('./CardTitle.jsx'),
-		CardContent = require('./CardContent.jsx'),
 		Paper = mui.Paper,
 		Radium = require('radium')
 
@@ -21,7 +20,7 @@ var Card = React.createClass(Radium.wrap({
 				this.props.style
 			]} >
 				{title}
-				<CardContent content={this.props.children} />
+				{this.props.children}
 			</div>
 		)
 	}

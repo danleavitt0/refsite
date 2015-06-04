@@ -11,13 +11,13 @@ var wget = require('wget');
 var Firebase = require('firebase');
 var fireBaseRef = new Firebase('https://ref-app.firebaseio.com/matches')
 
-// wget.download('http://www.premierleague.com/en-gb/matchday/results.html?paramComp_8=true&view=.dateSeason', 'public/wget')
+wget.download('http://www.premierleague.com/en-gb/matchday/results.html?paramComp_8=true&view=.dateSeason', 'public/wget')
 
 var query = new YQL('SELECT * FROM data.html.cssselect(10) WHERE url="http://www.premierleague.com/content/premierleague/en-gb/matchday/results.html?paramClubId=ALL&paramComp_8=true&paramSeasonId=2014&view=.dateSeason" AND css="li.megamenu-match"')
 var matches = []
 
 fireBaseRef.on("value", function(snapshot){
-  matches = snapshot.val().matches
+  matches = snapshot.val()
   console.log(matches)
 })
 
@@ -29,19 +29,23 @@ function getTeams (team) {
   }
 }
 
-query.exec(function (error, response) {
-  _.forEach(response.query.results.results.li, function(element){
-    var match = {}
-    var div = element.div
-    match.id = element.matchid
-    match.info = getTeams(div[1].a.span)
-    match.referee = div[5].a.content
-    match.time = div[0].span.timestamp
-    if(match.id && _.isEmpty(matches[match.id]))
-      matches[match.id] = match
-  })
-  fireBaseRef.update({matches:matches})
-})
+// query.exec(function (error, response) {
+//   console.log(response.query.results)
+//   if(response.query.results.results) {
+//     _.forEach(response.query.results.results.li, function(element){
+//       var match = {}
+//       var div = element.div
+//       match.id = element.matchid
+//       match.info = getTeams(div[1].a.span)
+//       match.referee = div[5].a.content
+//       match.time = div[0].span.timestamp
+//       if(match.id && _.isEmpty(matches[match.id]))
+//         matches[match.id] = match
+//     })
+//     fireBaseRef.update({matches:matches})
+//   }
+  
+// })
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console

@@ -3,6 +3,7 @@ var React = require('react'),
 		moment = require('moment'),
 		ColumnLayout = require('./ColumnLayout.jsx'),
 		Card = require('./Card.jsx'),
+		CardContent = require('./CardContent.jsx'),
 		Team = require('./Team.jsx'),
 		CommentBox = require('./CommentBox.jsx'),
 		MatchStore = require('./stores/MatchStore'),
@@ -13,11 +14,13 @@ function getMatchContent(match, i) {
 	match = _.first(match)
 	return (
 		<Card key={i} title={match.referee} color={Teams[match.info.home].color}>
-			<p> {moment(parseInt(match.time)).format('MMMM Do YYYY [at] h:mm a')} </p>
-			<div>
-				<Team team={match.info.home} score={match.info.score[0]} />
-				<Team team={match.info.away} score={match.info.score[2]} />
-			</div>
+			<CardContent>
+				<p> {moment(parseInt(match.time)).format('MMMM Do YYYY [at] h:mm a')} </p>
+				<div>
+					<Team team={match.info.home} score={match.info.score[0]} />
+					<Team team={match.info.away} score={match.info.score[2]} />
+				</div>
+			</CardContent>
 			<CommentBox id={match.id} />
 		</Card>
 	)
