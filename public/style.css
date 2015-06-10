@@ -1,0 +1,52 @@
+
+.match-enter {
+  position: absolute;
+  left:0;
+  right:0;
+  top:150vh;
+  transition: all .7s cubic-bezier(0.4,0,0.2,1);
+  z-index:1;
+}
+
+.match-enter.match-enter-active{
+	top:64px;
+}
+
+.match-leave {
+	left:0;
+	right:0;
+  -webkit-filter: grayscale(0%);
+  top:64px;
+  position: fixed;
+  transition: all .7s cubic-bezier(0.4,0,0.2,1);
+}
+
+.match-leave.match-leave-active {
+	-webkit-filter: grayscale(80%);
+}
+
+.home-enter {
+	position: absolute;
+	left:0;
+	right:0;
+	top:64px;
+	-webkit-transition: all .7s cubic-bezier(0.4,0,0.2,1);
+	-webkit-filter: grayscale(80%);
+}
+
+.home-enter.home-enter-active {
+	-webkit-filter: grayscale(0%);
+}
+
+.home-leave {
+	top:64px;
+	left:0;
+	right:0;
+  opacity:1;
+  position: fixed;
+  transition: all .7s cubic-bezier(0.4,0,0.2,1);
+}
+
+.home-leave.home-leave-active {
+	top:99vh;
+}

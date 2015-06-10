@@ -11,17 +11,26 @@ function getComment(el, idx) {
  
 }
     
-var CommentList = React.createClass({
+var CommentList = React.createClass(Radium.wrap({
   render: function () {
     var comments = this.props.comments ? 
       _.map(this.props.comments, getComment) :
       null
     return (
-      <div>
+      <div style={[
+        styles.base
+      ]}>
         {comments}
       </div>
     )
   }
-})  
+}))
+
+var styles = {
+  base:{
+    padding:10,
+    fontFamily:'inherit'
+  }
+}  
   
 module.exports = CommentList

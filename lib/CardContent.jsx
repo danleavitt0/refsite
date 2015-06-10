@@ -2,13 +2,14 @@ var React = require('react'),
 		Radium = require('radium')
 
 var CardContent = React.createClass(Radium.wrap({
+	
 	render: function() {
 		return (
 			<div style={[
 				styles.content,
 				this.props.style
 			]} >
-				{this.props.content}
+				{this.props.children}
 			</div>
 		)
 	}

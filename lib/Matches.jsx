@@ -3,22 +3,34 @@ var React = require('react'),
 		moment = require('moment'),
 		ColumnLayout = require('./ColumnLayout.jsx'),
 		Card = require('./Card.jsx'),
+		CardTitle = require('./CardTitle.jsx')
+		CardContent = require('./CardContent.jsx'),
 		Team = require('./Team.jsx'),
-		CommentBox = require('./CommentBox.jsx'),
 		MatchStore = require('./stores/MatchStore'),
 		Teams = require('./utils/Teams.json'),
+		VotingButtons = require('./VotingButtons.jsx'),
+		Router = require('react-router'),
+		Link = Router.Link,
+		mui = require('material-ui'),
+		IconButton = mui.IconButton,
 		_ = require('lodash')
 
 function getMatchContent(match, i) {
 	match = _.first(match)
 	return (
-		<Card key={i} title={match.referee} color={Teams[match.info.home].color}>
-			<p> {moment(parseInt(match.time)).format('MMMM Do YYYY [at] h:mm a')} </p>
-			<div>
-				<Team team={match.info.home} score={match.info.score[0]} />
-				<Team team={match.info.away} score={match.info.score[2]} />
-			</div>
-			<CommentBox id={match.id} />
+		<Card key={i}>
+			<Link style={styles.link} to={"/match/"+match.id}>
+				<CardTitle content={match.referee} style={{backgroundColor:Teams[match.info.home].color}}>
+					<VotingButtons />
+				</CardTitle>
+				<CardContent>
+					<p> {moment(parseInt(match.time)).format('MMMM Do YYYY [at] h:mm a')} </p>
+					<div>
+						<Team team={match.info.home} score={match.info.score[0]} />
+						<Team team={match.info.away} score={match.info.score[2]} />
+					</div>
+				</CardContent>
+			</Link>
 		</Card>
 	)
 }
@@ -56,6 +68,10 @@ var Matches = React.createClass(Radium.wrap({
 var styles = {
 	matchSection: {
 		backgroundColor:'#e5e5e5'
+	},
+	link: {
+		color:'rgba(0,0,0,0.87)',
+		textDecoration:'none'
 	}
 }
 

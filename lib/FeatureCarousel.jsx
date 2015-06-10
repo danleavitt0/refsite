@@ -8,14 +8,25 @@ var React = require('react'),
 		_ = require('lodash')
 
 var FeatureCarousel = React.createClass(Radium.wrap({
-	getInitialState: function() {
+	getDefaultProps: function() {
 		return {
-			active:0,
-			matches:[]
+			navigation:true	
 		}
 	},
+	getInitialState: function() {
+		this.getStateFromStore()
+	},
+	getStateFromStore: function () {
+		return {
+			matches: MatchStore.get(),
+			active: CarouselStore.get()
+		}
+	},
+	componentWillReceiveProps: function(nextProps) {
+		this.setState(this.getStateFromStore())
+	},
 	componentDidMount: function() {
-		var matches = []
+		this.setState(this.getStateFromStore())
 		CarouselStore.addChangeListener(this._handleChange)
 		MatchStore.addChangeListener(this._handleMatches)
 	},
@@ -25,7 +36,10 @@ var FeatureCarousel = React.createClass(Radium.wrap({
 	},
 	render: function () {
 		carouselItems = []
-		if(this.state.matches.length>0) {
+		var navigation = this.props.navigation ?
+			<Navigation active={this.state.active}/> :
+			null
+		if(this.state.matches && this.state.matches.length > 0) {
 			for (var i = 0; i < 3; i++) {
 				active = this.state.active === i ? true : false
 				carouselItems.push(<CarouselItem key={i} active={active} position={i} match={_.first(this.state.matches[i])} />)
@@ -37,7 +51,7 @@ var FeatureCarousel = React.createClass(Radium.wrap({
 				this.props.style
 			]} >
 				{carouselItems}
-				<Navigation active={this.state.active}/>
+				{navigation}
 			</div>
 		)
 	},

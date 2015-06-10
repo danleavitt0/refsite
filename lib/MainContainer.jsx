@@ -7,12 +7,12 @@ var React = require('react'),
 var MainContainer = React.createClass(Radium.wrap({
 	render: function() {
 		return (
-			<div style={[
+			<div key={0} style={[
 				styles.base,
 				this.props.style
 			]}>
-				<FeatureCarousel />
-				<Matches />
+				<FeatureCarousel key={1}/>
+				<Matches key={2}/>
 			</div>
 		)
 	}
