@@ -1,9 +1,9 @@
 
 .match-enter {
-  position: absolute;
+  position: fixed;
   left:0;
   right:0;
-  top:150vh;
+  top:100vh;
   transition: all .7s cubic-bezier(0.4,0,0.2,1);
   z-index:1;
 }
@@ -15,9 +15,8 @@
 .match-leave {
 	left:0;
 	right:0;
-  -webkit-filter: grayscale(0%);
-  top:64px;
-  position: fixed;
+  -webkit-filter: grayscale(30%);
+  position: relative;
   transition: all .7s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -26,10 +25,9 @@
 }
 
 .home-enter {
-	position: absolute;
+	position: relative;
 	left:0;
 	right:0;
-	top:64px;
 	-webkit-transition: all .7s cubic-bezier(0.4,0,0.2,1);
 	-webkit-filter: grayscale(80%);
 }

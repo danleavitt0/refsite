@@ -6,16 +6,16 @@ NODE_BIN = ./node_modules/.bin
 
 #
 # Tasks
-# 
+#
 
 validate:
 	@${NODE_BIN}/standard
 
-clean: 
+clean:
 	@rm public/bundle.js &> /dev/null || true
 
-reload: 
-	@${NODE_BIN}/watchify src/index.jsx -t reactify -o ./public/bundle.js & 
+reload:
+	@${NODE_BIN}/watchify src/index.jsx -d -t reactify -o ./public/bundle.js & 
 	@wait
 
 dev: clean reload

@@ -1,4 +1,5 @@
 var React = require('react'),
+		Radium = require('radium'),
 		ThemeManager = require('material-ui/lib/styles/theme-manager')(),
 		Header = require('../lib/Header.jsx'),
 		MainContainer = require('../lib/MainContainer.jsx'),
@@ -16,7 +17,7 @@ var React = require('react'),
 		ReactCSSTransitionGroup = React.addons.CSSTransitionGroup,
 		$ = require('jquery')
 
-var App = React.createClass({
+var App = React.createClass(Radium.wrap({
 
 	childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -34,7 +35,7 @@ var App = React.createClass({
 
   getInitialState: function() {
   	return {
-  		profile: ProfileActions.checkForLogin() 
+  		profile: ProfileActions.checkForLogin()
   	}
   },
 
@@ -50,9 +51,10 @@ var App = React.createClass({
 		var name = this.context.router.getCurrentPath()
 		var extract = name.match(/\/(.*)\//g);
 		name = extract ? extract.pop().replace(/\//ig,'') : 'home'
-		console.log(name)
 		return (
-			<div className="app">
+			<div className="app" style={[
+				styles.container
+			]}>
 				<Header profile={this.state.profile} />
 				<ReactCSSTransitionGroup container="div" transitionName={name}>
 					<RouteHandler key={name}/>
@@ -67,13 +69,22 @@ var App = React.createClass({
 		})
 	}
 
-})
+}))
+
+var styles = {
+	container: {
+		top:64,
+		position:'absolute',
+		left:0,
+		right:0
+	}
+}
 
 var routes = (
-	<Route name="app" path="/" handler={App}>
-		<Route name="match" path="/match" handler={Match}>
+	<Route name="app" path="/" handler={App} >
+		<Route name="match" path="/match" handler={Match} >
 			<NotFoundRoute handler={MatchNotFound} />
-			<Route name="matchInfo" path="/match/:matchId" handler={MatchInfo}/>
+			<Route name="matchInfo" path="/match/:matchId" handler={MatchInfo} />
 		</Route>
 		<DefaultRoute name="main" handler={MainContainer} />
 	</Route>
