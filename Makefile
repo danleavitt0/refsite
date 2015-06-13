@@ -15,11 +15,14 @@ clean:
 	@rm public/bundle.js &> /dev/null || true
 
 reload:
-	@${NODE_BIN}/watchify src/index.jsx -d -t reactify -o ./public/bundle.js & 
+	@${NODE_BIN}/watchify src/index.jsx -d -t reactify -o ./public/bundle.js &
 	@wait
 
-dev: clean reload
-	@${NODE_BIN}/nodemon app.js
+compileServer:
+	@${NODE_BIN}/jsx app.js > server.js
+
+dev: clean reload compileServer
+	@${NODE_BIN}/nodemon server.js
 
 prod: clean
 	@${NODE_BIN}/browserify src/index.jsx | ${NODE_BIN}/uglifyjs > ./public/bundle.js

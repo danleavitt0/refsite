@@ -1,4 +1,13 @@
 
+.headerSearch::-webkit-input-placeholder {
+  color:rgba(255,255,255,0.7);
+  transition: color .3s ease-in-out
+}
+
+.headerSearch:focus::-webkit-input-placeholder {
+  color:rgba(255,255,255,0.3)
+}
+
 .match-enter {
   position: fixed;
   left:0;
@@ -42,9 +51,10 @@
 	right:0;
   opacity:1;
   position: fixed;
+  z-index: 1;
   transition: all .7s cubic-bezier(0.4,0,0.2,1);
 }
 
 .home-leave.home-leave-active {
-	top:99vh;
+	top:100vh;
 }

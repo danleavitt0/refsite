@@ -1,13 +1,14 @@
 var React = require('react'),
 		Radium = require('radium'),
 		ThemeManager = require('material-ui/lib/styles/theme-manager')(),
-		Header = require('../lib/Header.jsx'),
-		MainContainer = require('../lib/MainContainer.jsx'),
+		Header = require('../lib/Header'),
+		MainContainer = require('../lib/MainContainer'),
 		ProfileActions = require('../lib/actions/ProfileActions'),
 		ProfileStore = require('../lib/stores/ProfileStore'),
-		Match = require('../lib/Match.jsx'),
-		MatchNotFound = require('../lib/MatchNotFound.jsx'),
-		MatchInfo = require('../lib/MatchInfo.jsx'),
+		Match = require('../lib/Match'),
+		MatchNotFound = require('../lib/MatchNotFound'),
+		MatchInfo = require('../lib/MatchInfo'),
+		Search = require('../lib/Search')
 		Router = require('react-router'),
 		DefaultRoute = Router.DefaultRoute,
 		Link = Router.Link,
@@ -15,6 +16,7 @@ var React = require('react'),
 		RouteHandler = Router.RouteHandler,
 		NotFoundRoute = Router.NotFoundRoute,
 		ReactCSSTransitionGroup = React.addons.CSSTransitionGroup,
+		routes = require('../routes/routes'),
 		$ = require('jquery')
 
 var App = React.createClass(Radium.wrap({
@@ -55,7 +57,7 @@ var App = React.createClass(Radium.wrap({
 			<div className="app" style={[
 				styles.container
 			]}>
-				<Header profile={this.state.profile} />
+				<Header profile={this.state.profile} title="Backseat Ref" />
 				<ReactCSSTransitionGroup container="div" transitionName={name}>
 					<RouteHandler key={name}/>
 				</ReactCSSTransitionGroup>
@@ -80,19 +82,10 @@ var styles = {
 	}
 }
 
-var routes = (
-	<Route name="app" path="/" handler={App} >
-		<Route name="match" path="/match" handler={Match} >
-			<NotFoundRoute handler={MatchNotFound} />
-			<Route name="matchInfo" path="/match/:matchId" handler={MatchInfo} />
-		</Route>
-		<DefaultRoute name="main" handler={MainContainer} />
-	</Route>
-)
-
-
 $(document).ready(function(){
 	Router.run(routes, Router.HistoryLocation, function(Handler){
 		React.render(<Handler/>, document.body)
 	})
 })
+
+module.exports = App
