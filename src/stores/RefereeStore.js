@@ -1,5 +1,5 @@
-var RefAppDispatcher = require('../dispatcher/RefAppDispatcher'),
-		RefConstants = require('../constants/RefConstants'),
+var RefAppDispatcher = require('lib/dispatcher/RefAppDispatcher'),
+		RefConstants = require('lib/constants/RefConstants'),
 		EventEmitter = require('events').EventEmitter,
 		assign = require('object-assign'),
 		Firebase = require('firebase'),

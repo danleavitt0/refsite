@@ -8,23 +8,28 @@ NODE_BIN = ./node_modules/.bin
 # Tasks
 #
 
-validate:
-	@${NODE_BIN}/standard
-
 clean:
-	@rm public/bundle.js &> /dev/null || true
+	@rm -rf node_modules/lib &> /dev/null || true &
+	@rm -rf lib &> /dev/null || true
 
-reload:
-	@${NODE_BIN}/watchify src/index.jsx -d -t reactify -o ./public/bundle.js &
+reactify: clean
+	@${NODE_BIN}/babel ${PWD}/src --watch --out-dir  ${PWD}/lib &
 	@wait
 
-compileServer:
-	@${NODE_BIN}/jsx app.js > server.js
+link: reactify
+	@ln -s ${PWD}/lib node_modules/lib
 
-dev: clean reload compileServer
+lint: link
+	@${NODE_BIN}/standard ${PWD}/src
+
+reload: lint
+	@${NODE_BIN}/watchify lib/Index.js -d -o ./public/bundle.js &
+	@wait
+
+dev: reload
 	@${NODE_BIN}/nodemon server.js
 
 prod: clean
-	@${NODE_BIN}/browserify src/index.jsx | ${NODE_BIN}/uglifyjs > ./public/bundle.js
+	@${NODE_BIN}/browserify lib/index.jsx | ${NODE_BIN}/uglifyjs > ./public/bundle.js
 
-.PHONY: validate clean dev less server
+.PHONY: clean link reactify reload dev prod

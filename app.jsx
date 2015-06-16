@@ -12,8 +12,8 @@ Firebase = require('firebase'),
 fireBaseRef = new Firebase('https://ref-app.firebaseio.com/'),
 React = require('react'),
 Router = require('react-router'),
-Teams = require('./src/utils/Teams.json'),
-routes = require('./lib/routes/routes')
+Teams = require('./Teams.json'),
+request = require('request')
 
 // wget.download('http://www.premierleague.com/en-gb/matchday/results.html?paramComp_8=true&view=.dateSeason', 'public/wget')
 
@@ -21,12 +21,33 @@ var query = new YQL('SELECT * FROM data.html.cssselect(10) WHERE url="http://www
 var matches = {}
 var referees = {}
 
-fireBaseRef.on("value", function(snapshot){
-  matches = snapshot.val().matches || {}
-  referees = snapshot.val().referees || {}
-  runQuery()
+var url = 'http://football-api.com/api/'
+var options = {
+  url:'http://api.football-data.org/alpha/soccerseasons/354',
+  headers:{
+    'X-Auth-Token':'02e16812e04d4d0faf1ee0656617ee1c'
+  }
+}
 
+request.get(options, function(err,data,response){
+  var teamArray = {}
+  var resp = JSON.parse(response)
+  var fixtureUrl = resp._links.teams.href
+  request.get({url:fixtureUrl}, function(err,data,response){
+    var teams = JSON.parse(response).teams
+    _.forEach(teams, function(team,idx){
+      teamArray[team.code] = team
+    })
+    fireBaseRef.update({teams:teamArray})
+  })
 })
+
+// fireBaseRef.on("value", function(snapshot){
+//   matches = snapshot.val().matches || {}
+//   referees = snapshot.val().referees || {}
+//   // runQuery()
+//
+// })
 
 function getTeams (team) {
   return {
@@ -75,13 +96,13 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.use(function(req,res,next){
-  var router = Router.create({location:req.url, routes:routes})
-  router.run(function(Handler,state){
-    var html = React.renderToString(<Handler/>)
-    return res.render('react_page', {html:html})
-  })
-})
+// app.use(function(req,res,next){
+//   var router = Router.create({location:req.url, routes:routes})
+//   router.run(function(Handler,state){
+//     var html = React.renderToString(<Handler/>)
+//     return res.render('react_page', {html:html})
+//   })
+// })
 
 app.get('*', function(req, res) {
   res.send('./' + req.url);

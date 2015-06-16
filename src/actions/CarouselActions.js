@@ -1,5 +1,5 @@
-var RefAppDispatcher = require('../dispatcher/RefAppDispatcher')
-var RefConstants = require('../constants/RefConstants')
+var RefAppDispatcher = require('lib/dispatcher/RefAppDispatcher')
+var RefConstants = require('lib/constants/RefConstants')
 
 var ActionTypes = RefConstants.ActionTypes
 
