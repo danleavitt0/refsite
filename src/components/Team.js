@@ -1,10 +1,47 @@
-var React = require('react'),
-		Teams = require('../../../Teams.json'),
-		Radium = require('radium')
+import React from 'react'
+import Teams from 'Teams.json'
+import Radium from 'radium'
 
+class Team extends React.Component {
 
-var Team = React.createClass(Radium.wrap({
-	render: function() {
+	getStyles () {
+		var styles = {
+			div: {
+				display:"flex",
+				alignItems:"center",
+				justifyContent:"space-between",
+				flex:"1"
+			},
+			img: {
+				display:"inline-block",
+				height:50,
+				width:50,
+				margin:"5px",
+				minWidth:50
+			},
+			title: {
+				display:"inline-block",
+				margin:"5px",
+				fontSize:22,
+				fontWeight:"100",
+				textAlign:"center"
+			},
+			score: {
+				display:"inline-block",
+				margin:"5px",
+				fontSize:40
+			},
+			team: {
+				display: "flex",
+			  alignItems: "center",
+			  justifyContent: "flex-start"
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
 			<div style={styles.div}>
 				<div style={styles.team}>
@@ -15,39 +52,7 @@ var Team = React.createClass(Radium.wrap({
 			</div>
 		)
 	}
-}))
 
-var styles = {
-	div: {
-		display:"flex",
-		alignItems:"center",
-		justifyContent:"space-between",
-		flex:"1"
-	},
-	img: {
-		display:"inline-block",
-		height:50,
-		width:50,
-		margin:"5px",
-		minWidth:50
-	},
-	title: {
-		display:"inline-block",
-		margin:"5px",
-		fontSize:22,
-		fontWeight:"100",
-		textAlign:"center"
-	},
-	score: {
-		display:"inline-block",
-		margin:"5px",
-		fontSize:40
-	},
-	team: {
-		display: "flex",
-	  alignItems: "center",
-	  justifyContent: "flex-start"
-	}
 }
 
-module.exports = Team
+export default Radium(Team)

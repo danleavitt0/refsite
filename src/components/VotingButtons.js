@@ -1,24 +1,27 @@
-var React = require('react'),
-		Radium = require('radium'),
-		ThumbUp = require('lib/components/ThumbUp'),
-		ThumbDown = require('lib/components/ThumbDown')
+import React from 'react'
+import Radium from 'radium'
+import Thumb from './Thumb'
 
-var VotingButtons = React.createClass(Radium.wrap({
-	getInitialState: function() {
-		return {
+class VotingButtons extends React.Component {
+
+	constructor (props) {
+		super(props)
+		this.state = {
 			up:false,
 			down:false
 		}
-	},
-	render: function () {
+	}
+
+	render () {
 		return (
 			<div>
-				<ThumbUp handleClick={this._handleUp} active={this.state.up} ref="up" />
-				<ThumbDown handleClick={this._handleDown} active={this.state.down} ref="down" />
+				<Thumb handleClick={this._handleUp.bind(this)} active={this.state.up} ref="up" direction="up"/>
+				<Thumb handleClick={this._handleDown.bind(this)} active={this.state.down} ref="down" direction="down"/>
 			</div>
 		)
-	},
-	_handleUp: function () {
+	}
+
+	_handleUp () {
 		var up = this.state.up ?
 			false :
 			true
@@ -26,8 +29,9 @@ var VotingButtons = React.createClass(Radium.wrap({
 			up:up,
 			down:false
 		})
-	},
-	_handleDown: function () {
+	}
+
+	_handleDown () {
 		var down = this.state.down ?
 			false :
 			true
@@ -36,6 +40,7 @@ var VotingButtons = React.createClass(Radium.wrap({
 			down:down
 		})
 	}
-}))
 
-module.exports = VotingButtons
+}
+
+export default Radium(VotingButtons)

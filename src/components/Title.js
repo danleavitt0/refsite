@@ -1,36 +1,41 @@
-var React = require('react'),
-		Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
 
-var Title = React.createClass(Radium.wrap({
-	getDefaultProps: function() {
-		return {
-			label: ''	
+class Title extends React.Component {
+
+	getStyles () {
+		var styles = {
+			base: {
+				display:'flex',
+				fontSize: 60,
+				color:'#fff',
+				margin:0,
+				fontWeight:400,
+				flex: 1,
+				alignItems: 'center',
+				fontFamily:'Roboto, sans-serif'
+			}
 		}
-	},
-	render: function () {
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
-			<h2 
+			<h2
 				style={[
-					styles.base, 
+					styles.base,
 					this.props.style
-			]}> 
-					{this.props.label} 
+			]}>
+					{this.props.label}
 			</h2>
 		)
 	}
-}))
 
-var styles = {
-	base: {
-		display:'flex',
-		fontSize: 60,
-		color:'#fff',
-		margin:0,
-		fontWeight:400,
-		flex: 1,
-		alignItems: 'center',
-		fontFamily:'Roboto, sans-serif'
-	}
 }
 
-module.exports = Title
+Title.defaultProps = {
+	label: ''
+}
+
+export default Radium(Title)

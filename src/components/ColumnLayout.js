@@ -1,13 +1,12 @@
-var React = require('react'),
-    Card = require('lib/components/Card'),
-    _ = require('lodash'),
-    Radium = require('radium')
-
-var numColumns = 1
+import React from 'react'
+import Radium from 'radium'
+import Card from  './Card'
+import _ from 'lodash'
 
 function getColumnNumber (colWidth) {
   var cols
   var width = window.innerWidth
+  console.log(colWidth)
 
   if (width < colWidth*2 + 100) {
     cols = 1
@@ -24,32 +23,30 @@ function getColumnNumber (colWidth) {
 
 }
 
-var ColumnLayout = React.createClass(Radium.wrap({
+class ColumnLayout extends React.Component {
 
-  getDefaultProps: function() {
-    return {
-      width: 350
+  constructor (props) {
+    super(props)
+    this.state = {
+      width: this.props.width,
+      numColumns: 3
     }
-  },
+  }
 
-  getInitialState: function() {
-    return getColumnNumber(this.props.width)
-  },
-
-  getCards: function(col) {
+  getCards (col) {
     var cards = _.takeRight(this.props.cards, 10)
     return _.filter(cards, function(card, i){
-      return i % this.state.numColumns ===  col
+      return i % this.state.numColumns === col
     },this)
-  },
+  }
 
-  handleResize: function(e) {
+  handleResize (e) {
     this.setState(getColumnNumber(this.props.width))
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount () {
 
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize.bind(this))
     this.columnStyle = {
       width:this.props.width,
       maxWidth:'100%',
@@ -58,13 +55,13 @@ var ColumnLayout = React.createClass(Radium.wrap({
       verticalAlign: 'top'
     }
 
-  },
+  }
 
-  componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize)
-  },
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize.bind(this))
+  }
 
-  render: function() {
+  render () {
 
     var cols = []
 
@@ -79,7 +76,6 @@ var ColumnLayout = React.createClass(Radium.wrap({
         </div>
       )
     }
-
     return (
       <div style={styles.container} className="md-grid-container">
         {cols}
@@ -87,7 +83,12 @@ var ColumnLayout = React.createClass(Radium.wrap({
     )
 
   }
-}))
+
+}
+
+ColumnLayout.defaultProps = {
+  width: 350
+}
 
 var styles = {
   column:{
@@ -106,4 +107,4 @@ var styles = {
   }
 }
 
-module.exports = ColumnLayout
+export default Radium(ColumnLayout)

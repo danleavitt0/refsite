@@ -6,7 +6,7 @@ var RefAppDispatcher = require('lib/dispatcher/RefAppDispatcher'),
 var ActionTypes = RefConstants.ActionTypes
 var CHANGE_EVENT = 'change'
 
-var lock = new Auth0Lock('blmslNuRf8DQmjSBmJZsLQ0c4T7tyvio', 'danleavitt.auth0.com');
+// var lock = new Auth0Lock('blmslNuRf8DQmjSBmJZsLQ0c4T7tyvio', 'danleavitt.auth0.com');
 var idToken
 var user
 

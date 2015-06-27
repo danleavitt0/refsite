@@ -1,19 +1,17 @@
-var React = require('react'),
-		Radium = require('radium'),
-		moment = require('moment'),
-		ColumnLayout = require('lib/components/ColumnLayout'),
-		Card = require('lib/components/Card'),
-		CardTitle = require('lib/components/CardTitle'),
-		CardContent = require('lib/components/CardContent'),
-		Team = require('lib/components/Team'),
-		MatchStore = require('lib/stores/MatchStore'),
-		Teams = require('../../../Teams.json'),
-		VotingButtons = require('lib/components/VotingButtons'),
-		Router = require('react-router'),
-		Link = Router.Link,
-		mui = require('material-ui'),
-		IconButton = mui.IconButton,
-		_ = require('lodash')
+import React from 'react'
+import Radium from 'radium'
+import moment from 'moment'
+import ColumnLayout from './ColumnLayout'
+import Card from './Card'
+import CardTitle from './CardTitle'
+import CardContent from './CardContent'
+import Team from './Team'
+import MatchStore from 'lib/stores/MatchStore'
+import Teams from 'Teams.json'
+import VotingButtons from './VotingButtons'
+import {IconButton} from 'material-ui'
+import {Link} from 'react-router'
+import _ from 'lodash'
 
 function getMatchContent(match, i) {
 	return (
@@ -34,7 +32,7 @@ function getMatchContent(match, i) {
 	)
 }
 
-var Matches = React.createClass(Radium.wrap({
+var Matches = React.createClass({
 	getInitialState: function() {
 		return {
 			matches:MatchStore.get()
@@ -53,7 +51,7 @@ var Matches = React.createClass(Radium.wrap({
 				styles.matchSection,
 				this.props.style
 			]}>
-				<ColumnLayout cards={matches} />
+				<ColumnLayout cards={matches}/>
 			</div>
 		)
 	},
@@ -62,7 +60,7 @@ var Matches = React.createClass(Radium.wrap({
 			matches:MatchStore.get()
 		})
 	}
-}))
+})
 
 var styles = {
 	matchSection: {
@@ -74,4 +72,4 @@ var styles = {
 	}
 }
 
-module.exports = Matches
+export default Radium(Matches)

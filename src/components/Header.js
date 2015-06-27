@@ -1,25 +1,13 @@
-var React = require('react'),
-		Radium = require('radium'),
-		mui = require('material-ui'),
-		Login = require('lib/components/Login'),
-		Router = require('react-router'),
-		SearchBar = require('lib/components/SearchBar'),
-		Link = Router.Link,
-		AppBar = mui.AppBar
+import React from 'react'
+import Radium from 'radium'
+import Login from './Login'
+import SearchBar from './SearchBar'
+import {Link} from 'react-router'
+import _ from 'lodash'
 
-var Header = React.createClass(Radium.wrap({
+class Header extends React.Component {
 
-	contextTypes: {
-		muiTheme: React.PropTypes.object
-	},
-
-	getDefaultProps: function() {
-		return {
-			title: "Title"
-		}
-	},
-
-	getStyles: function () {
+	getStyles () {
 		var theme = this.context.muiTheme
 		var styles = {
 			header:{
@@ -45,9 +33,17 @@ var Header = React.createClass(Radium.wrap({
 			}
 		}
 		return styles
-	},
+	}
 
-	render: function() {
+	mergeStyles (styleArray) {
+		var styles = {}
+		_.forEach(styleArray, function (styleObj) {
+			styles = _.merge(styles, styleObj)
+		})
+		return styles
+	}
+
+	render () {
 		var styles = this.getStyles()
 		return (
 			<div style={[
@@ -61,6 +57,14 @@ var Header = React.createClass(Radium.wrap({
 		)
 	}
 
-}))
+}
 
-module.exports = Header;
+Header.contextTypes = {
+	muiTheme: React.PropTypes.object
+}
+
+Header.defaultProps = {
+	title: "Title"
+}
+
+export default Radium(Header)

@@ -1,12 +1,11 @@
-var React = require('react'),
-    Radium = require('radium'),
-    mui = require('material-ui'),
-    FontIcon = mui.FontIcon,
-    Router = require('react-router'),
-    Navigation = Router.Navigation
+import React from 'react'
+import Radium from 'radium'
+import {FontIcon} from 'material-ui'
+import Router from 'react-router'
+import {Navigation} from 'react-router'
+import _ from 'lodash'
 
-
-var SearchBar = React.createClass(Radium.wrap({
+var SearchBar = React.createClass({
 
   mixins: [Navigation, Router.State],
 
@@ -61,7 +60,7 @@ var SearchBar = React.createClass(Radium.wrap({
         styles.base,
         this.props.style
       ]}>
-        <FontIcon style={[styles.icon]} className="material-icons">search</FontIcon>
+        <i style={[styles.icon]} className="material-icons">search</i>
         <input onChange={this._handleInput} className="headerSearch" placeholder="Search" style={[styles.input]} />
       </div>
     )
@@ -78,6 +77,6 @@ var SearchBar = React.createClass(Radium.wrap({
     }
   }
 
-}))
+})
 
-module.exports = SearchBar
+export default Radium(SearchBar)

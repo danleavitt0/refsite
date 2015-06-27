@@ -1,9 +1,38 @@
-var React = require('react'),
-		Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
 
-var CardTitle = React.createClass(Radium.wrap({
+class CardTitle extends React.Component {
 
-	render: function () {
+	getStyles () {
+		var styles = {
+			content: {
+				backgroundColor:'tomato',
+				height:60,
+				width:'100%',
+				lineHeight:'54px',
+				color:'#fff',
+				padding:'5px 12px 5px 20px',
+				boxSizing:'border-box',
+				fontSize:22,
+				fontFamily:'Roboto, sans-serif',
+				opacity:0.8,
+				display:'flex'
+			},
+			title:{
+				flex:1,
+				padding:'0 5px'
+			},
+			icons:{
+				lineHeight:'36px',
+				position:'relative',
+				top:'2px'
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
 			<div key={1} style={[
 				styles.content,
@@ -15,31 +44,6 @@ var CardTitle = React.createClass(Radium.wrap({
 		)
 	}
 
-}))
-
-var styles = {
-	content: {
-		backgroundColor:'tomato',
-		height:60,
-		width:'100%',
-		lineHeight:'54px',
-		color:'#fff',
-		padding:'5px 12px 5px 20px',
-		boxSizing:'border-box',
-		fontSize:22,
-		fontFamily:'Roboto, sans-serif',
-		opacity:0.8,
-		display:'flex'
-	},
-	title:{
-		flex:1,
-		padding:'0 5px'
-	},
-	icons:{
-		lineHeight:'36px',
-		position:'relative',
-		top:'2px'
-	}
 }
 
-module.exports = CardTitle
+export default Radium(CardTitle)

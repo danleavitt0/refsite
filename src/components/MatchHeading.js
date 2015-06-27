@@ -1,15 +1,31 @@
-var React = require('react'),
-		Radium = require('radium'),
-		Teams = require('../../../Teams.json'),
-		MatchHeadingHome = require('lib/components/MatchHeadingHome'),
-		ScoreBox = require('lib/components/ScoreBox')
+import React from 'react'
+import Radium from 'radium'
+import Teams from 'Teams.json'
+import MatchHeadingHome from './MatchHeadingHome'
+import ScoreBox from './ScoreBox'
 
-var MatchHeading = React.createClass(Radium.wrap({
-	render: function () {
+class MatchHeading extends React.Component {
+
+	getStyles () {
+		var styles = {
+			div: {
+				height:230,
+				width:'100%',
+				backgroundColor:'#333',
+				display:'flex',
+				color:'#fff',
+				fontSize:30,
+				alignItems:'center'
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		if(this.props.content) {
 			var home = this.props.content.info.home
 			var away = this.props.content.info.away
-			console.log(home,away)
 			return (
 				<div style={[styles.div, this.props.style]}>
 					<MatchHeadingHome content={home} />
@@ -20,18 +36,7 @@ var MatchHeading = React.createClass(Radium.wrap({
 		}
 		else return null
 	}
-}))
 
-var styles = {
-	div: {
-		height:230,
-		width:'100%',
-		backgroundColor:'#333',
-		display:'flex',
-		color:'#fff',
-		fontSize:30,
-		alignItems:'center'
-	}
 }
 
-module.exports = MatchHeading
+export default Radium(MatchHeading)

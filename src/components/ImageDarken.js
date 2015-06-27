@@ -1,8 +1,22 @@
-var React = require('react'),
-		Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
 
-var ImageDarken = React.createClass(Radium.wrap({
-	render: function () {
+class ImageDarken extends React.Component {
+
+	getStyles () {
+		var styles = {
+			base:{
+				position:'absolute',
+				width:'100%',
+				height:'100%',
+				backgroundColor: 'rgba(0,0,0,0.3)',
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
 			<div style={[
 				styles.base,
@@ -11,15 +25,7 @@ var ImageDarken = React.createClass(Radium.wrap({
 			]} />
 		)
 	}
-}))
 
-var styles = {
-	base:{
-		position:'absolute',
-		width:'100%',
-		height:'100%',
-		backgroundColor:'rgba(0,0,0,0.3)',
-	}
 }
 
-module.exports = ImageDarken
+export default Radium(ImageDarken)

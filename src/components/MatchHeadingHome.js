@@ -1,9 +1,36 @@
-var React = require('react'),
-		Radium = require('radium'),
-		Teams = require('../../../Teams.json')
+import React from 'react'
+import Radium from 'radium'
+import Teams from 'Teams.json'
 
-var MatchHeadingHome = React.createClass(Radium.wrap({
-	render: function () {
+class MatchHeadingHome extends React.Component {
+
+	getStyles () {
+		var styles = {
+			div: {
+				display:'flex',
+				justifyContent:'center',
+				alignItems:'center',
+				flexDirection:'column',
+				flex:1
+			},
+			img: {
+				height:120,
+				width:120
+			},
+			title:{
+				fontFamily:'Roboto, sans-serif',
+				fontWeight:800,
+				margin:0,
+				textShadow:'1px 1px rgba(0,0,0,0.2)',
+				fontSize:40,
+				fontSmoothing:'antialiased'
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
 			<div style={[styles.div, this.props.style]}>
 				<img style={[styles.img]} src={Teams[this.props.content]['logo-url']} />
@@ -11,28 +38,7 @@ var MatchHeadingHome = React.createClass(Radium.wrap({
 			</div>
 		)
 	}
-}))
 
-var styles = {
-	div: {
-		display:'flex',
-		justifyContent:'center',
-		alignItems:'center',
-		flexDirection:'column',
-		flex:1
-	},
-	img: {
-		height:120,
-		width:120
-	},
-	title:{
-		fontFamily:'Roboto, sans-serif',
-		fontWeight:800,
-		margin:0,
-		textShadow:'1px 1px rgba(0,0,0,0.2)',
-		fontSize:40,
-		fontSmoothing:'antialiased'
-	}
 }
 
-module.exports = MatchHeadingHome
+export default Radium(MatchHeadingHome)

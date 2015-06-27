@@ -1,47 +1,62 @@
-var React = require('react'),
-		mui = require('material-ui'),
-		CarouselItem = require('lib/components/CarouselItem'),
-		Navigation = require('lib/components/Navigation'),
-		CarouselStore = require('lib/stores/CarouselStore'),
-		MatchStore = require('lib/stores/MatchStore'),
-		Radium = require('radium'),
-		_ = require('lodash')
+import React from 'react'
+import Radium from 'radium'
+import _ from 'lodash'
+import CarouselItem from './CarouselItem'
+import Navigation from './Navigation'
+import CarouselStore from 'lib/stores/CarouselStore'
+import MatchStore from 'lib/stores/MatchStore'
 
-var FeatureCarousel = React.createClass(Radium.wrap({
-	getDefaultProps: function() {
-		return {
-			navigation:true
-		}
-	},
-	getInitialState: function() {
-		this.getStateFromStore()
-	},
-	getStateFromStore: function () {
+class FeatureCarousel extends React.Component {
+
+	constructor (props) {
+		super(props)
+		this.state = this.getStateFromStore()
+	}
+
+	getStateFromStore () {
 		return {
 			matches: MatchStore.get(),
 			active: CarouselStore.get()
 		}
-	},
-	componentWillReceiveProps: function(nextProps) {
+	}
+
+	componentWillReceiveProps (nextProps) {
 		this.setState(this.getStateFromStore())
-	},
-	componentDidMount: function() {
+	}
+
+	componentDidMount () {
 		this.setState(this.getStateFromStore())
-		CarouselStore.addChangeListener(this._handleChange)
-		MatchStore.addChangeListener(this._handleMatches)
-	},
-	componentWillUnmount: function() {
-		CarouselStore.removeChangeListener(this._handleChange)
-		MatchStore.removeChangeListener(this._handleMatches)
-	},
-	render: function () {
-		carouselItems = []
+		CarouselStore.addChangeListener(this._handleChange.bind(this))
+		MatchStore.addChangeListener(this._handleMatches.bind(this))
+	}
+
+	componentWillUnmount () {
+		CarouselStore.removeChangeListener(this._handleChange.bind(this))
+		MatchStore.removeChangeListener(this._handleMatches.bind(this))
+	}
+
+	getStyles () {
+		var styles = {
+			base:{
+				display:'flex',
+				width:'100%',
+				height:'60vh',
+				minHeight:400,
+				position:'relative'
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
+		var carouselItems = []
 		var navigation = this.props.navigation ?
 			<Navigation active={this.state.active}/> :
 			null
 		if(this.state.matches && this.state.matches.length > 0) {
 			for (var i = 0; i < 3; i++) {
-				active = this.state.active === i ? true : false
+				var active = this.state.active === i ? true : false
 				carouselItems.push(<CarouselItem key={i} active={active} position={i} match={this.state.matches[i]} />)
 			}
 		}
@@ -54,27 +69,24 @@ var FeatureCarousel = React.createClass(Radium.wrap({
 				{navigation}
 			</div>
 		)
-	},
-	_handleChange: function() {
+	}
+
+	_handleChange () {
 		this.setState({
 			active:CarouselStore.get()
 		})
-	},
-	_handleMatches: function() {
+	}
+
+	_handleMatches () {
 		this.setState({
 			matches:MatchStore.get()
 		})
 	}
-}))
 
-var styles = {
-	base:{
-		display:'flex',
-		width:'100%',
-		height:'60vh',
-		minHeight:400,
-		position:'relative'
-	}
 }
 
-module.exports = FeatureCarousel
+FeatureCarousel.defaultProps = {
+	navigation:true
+}
+
+export default Radium(FeatureCarousel)

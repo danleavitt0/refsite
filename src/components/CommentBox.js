@@ -1,11 +1,18 @@
-var React = require('react'),
-    Radium = require('radium'),
-    CommentList = require('lib/components/CommentList'),
-    CommentInput = require('lib/components/CommentInput'),
-    Firebase = require('firebase')
+import React from 'react'
+import Radium from 'radium'
+import {CommentList, CommentInput} from 'lib/components'
+import Firebase from 'firebase'
 
-var CommentBox = React.createClass(Radium.wrap({
-  componentDidMount: function () {
+class CommentBox extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.setState({
+        comments:null
+    })
+  }
+
+  componentDidMount () {
     var fireBaseRef = new Firebase('https://ref-app.firebaseio.com/matches/matches/'+this.props.id)
     fireBaseRef.on('value', function(snapshot){
       this.data = snapshot.val()
@@ -13,13 +20,9 @@ var CommentBox = React.createClass(Radium.wrap({
         comments: this.data.comments || null
       })
     }.bind(this))
-  },
-  getInitialState: function () {
-    return ({
-      comments:null
-    })
-  },
-  render: function () {
+  }
+
+  render () {
     return (
       <div style={[
         styles.commentBox,
@@ -30,7 +33,7 @@ var CommentBox = React.createClass(Radium.wrap({
       </div>
     )
   }
-}))
+}
 
 var styles = {
   commentBox: {
@@ -40,4 +43,4 @@ var styles = {
   }
 }
 
-module.exports = CommentBox
+module.exports = Radium(CommentBox)

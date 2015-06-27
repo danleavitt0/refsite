@@ -1,12 +1,14 @@
-var React = require('react'),
-		Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
 
-var MatchNotFound = React.createClass(Radium.wrap({
-	render: function () {
+class MatchNotFound extends React.Component {
+
+	render () {
 		return (
 			<div> Match is not found </div>
 		)
 	}
-}))
 
-module.exports = MatchNotFound
+}
+
+export default Radium(MatchNotFound)

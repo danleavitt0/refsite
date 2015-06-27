@@ -1,13 +1,18 @@
-var React = require('react'),
-    Radium = require('radium'),
-    Card = require('lib/components/Card'),
-    CardTitle = require('lib/components/CardTitle'),
-    moment = require('moment'),
-    Title = require('lib/components/Title')
+import React from 'react'
+import Radium from 'radium'
+import moment from 'moment'
+import {Link} from 'react-router'
+import _ from 'lodash'
+import Card from './Card'
+import CardTitle from './CardTitle'
+import CardContent from './CardContent'
+import Team from './Team'
+import Title from './Title'
+import Teams from 'Teams.json'
 
-var MatchResults = React.createClass(Radium.wrap({
+class MatchResults extends React.Component {
 
-  getStyles: function () {
+  getStyles () {
     var styles = {
       card: {
         width:350,
@@ -31,16 +36,16 @@ var MatchResults = React.createClass(Radium.wrap({
       }
     }
     return styles
-  },
+  }
 
-  filterResults: function(list) {
+  filterResults (list) {
     var results = _.filter(list, function(el,idx){
       return el.teams.toLowerCase().indexOf(this.props.query) > -1;
     }.bind(this))
     return results
-  },
+  }
 
-  render: function () {
+  render () {
     var styles = this.getStyles()
     var items = _.map(this.filterResults(this.props.list), function(match, i){
       return (
@@ -58,7 +63,7 @@ var MatchResults = React.createClass(Radium.wrap({
     			</Link>
     		</Card>
       )
-    })
+    }, this)
     return (
       <div style={[this.props.style]}>
         <Title style={[styles.title]} label="Matches" />
@@ -71,6 +76,6 @@ var MatchResults = React.createClass(Radium.wrap({
     )
   }
 
-}))
+}
 
-module.exports = MatchResults
+export default Radium(MatchResults)

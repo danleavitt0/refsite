@@ -11,7 +11,7 @@ function getComment(el, idx) {
 
 }
 
-var CommentList = React.createClass(Radium.wrap({
+var CommentList = React.createClass({
   render: function () {
     var comments = this.props.comments ?
       _.map(this.props.comments, getComment) :
@@ -24,7 +24,7 @@ var CommentList = React.createClass(Radium.wrap({
       </div>
     )
   }
-}))
+})
 
 var styles = {
   base:{
@@ -33,4 +33,4 @@ var styles = {
   }
 }
 
-module.exports = CommentList
+export default Radium(CommentList)

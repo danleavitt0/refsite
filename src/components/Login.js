@@ -1,70 +1,45 @@
-var React = require('react'),
-	mui = require('material-ui'),
-	ProfileStore = require('lib/stores/ProfileStore'),
-	ProfileActions = require('lib/actions/ProfileActions'),
-	ThemeManager = require('material-ui/lib/styles/theme-manager')(),
-	RaisedButton = mui.RaisedButton,
-	Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
+import {RaisedButton} from 'material-ui'
+import ProfileActions from 'lib/actions/ProfileActions'
+var ThemeManager = require('material-ui/lib/styles/theme-manager')()
 
-var Login = React.createClass(Radium.wrap({
+class Login extends React.Component {
 
-	childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
-  getChildContext: function() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    }
-  },
-
-	getDefaultProps: function () {
-		return {
-			label: "Login"
+	getStyles () {
+		var styles = {
+			base: {
+				marginTop:6
+			}
 		}
-	},
-
-	login: function () {
-		ProfileActions.login()
-	},
-
-	logout: function () {
-		ProfileActions.logout()
-	},
-
-	render: function () {
-		if (this.props.profile) {
-			return (
-				<div>
-					<RaisedButton
-						onClick={this.logout}
-						primary={true}
-						label="logout"
-						style={styles.base}
-					/>
-				</div>
-			)
-		}
-		else {
-			return(
-				<div className="LoginButton">
-					<RaisedButton
-						onClick={this.login}
-						primary={true}
-						label={this.props.label}
-						style={styles.base}
-					/>
-				</div>
-			)
-		}
+		return styles
 	}
 
-}))
-
-var styles = {
-	base: {
-		marginTop:6
+	render () {
+		var styles = this.getStyles()
+		return(
+			<div className="LoginButton">
+				<RaisedButton
+					primary={true}
+					label={this.props.label}
+					style={styles.base}
+				/>
+			</div>
+		)
 	}
+
 }
 
-module.exports = Login
+Login.contextTypes = {
+	muiTheme: React.PropTypes.object
+}
+
+Login.childContext = {
+	muiTheme: ThemeManager.getCurrentTheme()
+}
+
+Login.defaultProps = {
+	label: "Login"
+}
+
+export default Radium(Login)

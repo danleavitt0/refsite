@@ -1,9 +1,19 @@
-var React = require('react'),
-		Radium = require('radium')
+import React from 'react'
+import Radium from 'radium'
 
-var CardContent = React.createClass(Radium.wrap({
+class CardContent extends React.Component {
 
-	render: function() {
+	getStyles () {
+		var styles = {
+			content: {
+				padding: 10
+			}
+		}
+		return styles
+	}
+
+	render () {
+		var styles = this.getStyles()
 		return (
 			<div style={[
 				styles.content,
@@ -13,12 +23,7 @@ var CardContent = React.createClass(Radium.wrap({
 			</div>
 		)
 	}
-}))
 
-var styles = {
-	content:{
-		padding:10
-	}
 }
 
-module.exports = CardContent
+export default Radium(CardContent)

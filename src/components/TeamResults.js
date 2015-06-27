@@ -1,12 +1,13 @@
-var React = require('react'),
-    Radium = require('radium'),
-    Card = require('lib/components/Card'),
-    CardTitle = require('lib/components/CardTitle'),
-    Title = require('lib/components/Title')
+import React from 'react'
+import Radium from 'radium'
+import Card from './Card'
+import CardTitle from './CardTitle'
+import Title from './Title'
+import _ from 'lodash'
 
-var TeamResults = React.createClass(Radium.wrap({
+class TeamResults extends React.Component {
 
-  getStyles: function () {
+  getStyles () {
     var styles = {
       base:{
         width:'80%',
@@ -32,16 +33,16 @@ var TeamResults = React.createClass(Radium.wrap({
       }
     }
     return styles
-  },
+  }
 
-  filterResults: function(list) {
+  filterResults (list) {
     var results = _.filter(list, function(el,idx){
       return el.name.toLowerCase().indexOf(this.props.query) > -1;
     }.bind(this))
     return results
-  },
+  }
 
-  render: function () {
+  render () {
     var styles = this.getStyles()
     var items = _.map(this.filterResults(this.props.list), function(el){
       return (
@@ -55,7 +56,7 @@ var TeamResults = React.createClass(Radium.wrap({
           </CardTitle>
         </Card>
       )
-    })
+    }, this)
     return (
       <div style={[this.props.style]}>
         <Title style={[styles.title]} label="Teams" />
@@ -68,6 +69,6 @@ var TeamResults = React.createClass(Radium.wrap({
     )
   }
 
-}))
+}
 
-module.exports = TeamResults
+export default Radium(TeamResults)

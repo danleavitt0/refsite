@@ -1,30 +1,28 @@
-var React = require('react'),
-    Radium = require('radium'),
-    AutoSize = require('lib/utils/AutoSize')
+import React from 'react'
+import Radium from 'radium'
+import AutoSize from 'lib/utils/AutoSize'
 
-var Input = React.createClass(Radium.wrap({
-  getDefaultProps: function () {
-    return {
-      placeholder:'',
-      update:function(){}
-    }
-  },
-  getInitialState: function () {
-    return({
-      value:''
+class Input extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.setState({
+      value: ''
     })
-  },
-  componentDidMount: function () {
+  }
+
+  componentDidMount () {
     this.setState({
       height:AutoSize(this)
     })
-  },
-  render: function () {
+  }
+
+  render () {
     return (
       <textarea
-      onChange={this._handleInput}
+      onChange={this._handleInput.bind(this)}
       placeholder={this.props.placeholder}
-      onKeyDown={this._checkReturn}
+      onKeyDown={this._checkReturn.bind(this)}
       value={this.state.value}
       style={[
         styles.base,
@@ -33,15 +31,17 @@ var Input = React.createClass(Radium.wrap({
       ]} >
       </textarea>
     )
-  },
-  _handleInput: function (e) {
+  }
+
+  _handleInput (e) {
     AutoSize(this)
     this.setState({
       value:e.target.value,
       height:AutoSize(this)
     })
-  },
-  _checkReturn: function (e) {
+  }
+
+  _checkReturn (e) {
     if(e.key === "Enter") {
       e.preventDefault()
       e.stopPropagation()
@@ -51,7 +51,13 @@ var Input = React.createClass(Radium.wrap({
       })
     }
   }
-}))
+
+}
+
+Input.defaultProps = {
+  placeholder:'',
+  update:function(){}
+}
 
 var styles ={
   base: {
@@ -77,4 +83,4 @@ var styles ={
   }
 }
 
-module.exports = Input
+export default Input
